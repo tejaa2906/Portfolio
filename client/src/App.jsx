@@ -1071,6 +1071,7 @@ function AdminPage({
 
 function App() {
   const [route, setRoute] = useState(getRouteFromHash);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [portfolioContent, setPortfolioContent] = useState({
     projects: [],
     travelPosts: [],
@@ -1125,6 +1126,7 @@ function App() {
   useEffect(() => {
     const onHashChange = () => {
       setRoute(getRouteFromHash());
+      setMobileMenuOpen(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -1272,16 +1274,29 @@ function App() {
 
   return (
     <div className="page-shell">
-      <header className="topbar">
+      <header className={`topbar${mobileMenuOpen ? " is-open" : ""}`}>
         <a className="brand" href="#/">
           My Portfolio
         </a>
-        <nav className="menu" aria-label="Main">
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="main-menu"
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          onClick={() => setMobileMenuOpen((current) => !current)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav id="main-menu" className="menu" aria-label="Main">
           {navItems.map((item) => (
             <a
               key={item.href}
               className={`menu-link${isActiveRoute(route, item.href) ? " is-active" : ""}`}
               href={`#${item.href}`}
+              onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
             </a>
