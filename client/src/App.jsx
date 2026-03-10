@@ -1256,6 +1256,15 @@ function App() {
               </p>
             ))}
           </section>
+          <aside className="hero-portrait-wrap" aria-label="Portrait">
+            <div className="hero-portrait-frame">
+              <img
+                className="hero-portrait"
+                src={`${import.meta.env.BASE_URL}tejaswini-landing.jpg`}
+                alt="Tejaswini Gude"
+              />
+            </div>
+          </aside>
         </main>
       </section>
     );
