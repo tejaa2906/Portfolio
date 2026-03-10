@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend-only portfolio for static deployment",
+  "scripts": {
+    "dev": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "preview": "npm run preview --prefix client -- --host 0.0.0.0 --port 4173"
+  }
+}
