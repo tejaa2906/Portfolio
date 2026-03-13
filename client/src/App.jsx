@@ -2,25 +2,17 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import SparklesText from "./components/SparklesText";
 import {
-  achievements,
+  education,
   introParagraphs,
   navItems,
-  professionalSummary
+  technicalSkills,
+  volunteeringExperience,
+  workExperience
 } from "./siteContent";
 import {
-  deleteProject,
-  deleteTravelPost,
-  getAdminSession,
   hasSupabase,
   loadPortfolioContent,
-  removeTravelImage,
-  saveProject,
-  saveTravelPost,
-  signInAdmin,
-  signOutAdmin,
-  slugify,
-  subscribeToAuthChanges,
-  uploadTravelImage
+  slugify
 } from "./lib/portfolioApi";
 
 const travelGallerySlots = 4;
@@ -32,7 +24,7 @@ function getRouteFromHash() {
 
   const hash = window.location.hash.replace(/^#/, "");
 
-  if (!hash || hash === "/") {
+  if (!hash || hash === "/" || hash === "/admin") {
     return "/";
   }
 
@@ -140,6 +132,38 @@ function splitParagraphs(text) {
     .filter(Boolean);
 }
 
+function parseTravelStoryBlocks(text) {
+  return splitParagraphs(text)
+    .map((block) => {
+      if (/^\[photo\d+\]$/i.test(block)) {
+        return null;
+      }
+
+      const imageMatch = block.match(/^\[image:([^|\]]+)\|([^\]]+)\]$/i);
+
+      if (imageMatch) {
+        const [, src, caption] = imageMatch;
+
+        return {
+          type: "image",
+          src: `${import.meta.env.BASE_URL}${src.trim()}`.replace(/([^:]\/)\/+/g, "$1"),
+          caption: caption.trim()
+        };
+      }
+
+      if (block.startsWith("## ")) {
+        return { type: "heading", content: block.slice(3).trim() };
+      }
+
+      if (block.startsWith("📸")) {
+        return { type: "note", content: block.replace(/^📸\s*/, "").trim() };
+      }
+
+      return { type: "paragraph", content: block };
+    })
+    .filter(Boolean);
+}
+
 function StatusBanner({ tone = "neutral", children }) {
   return <div className={`status-banner status-banner-${tone}`}>{children}</div>;
 }
@@ -159,24 +183,101 @@ function ExperiencePage() {
     <main className="page-view">
       <section className="content-card">
         <div className="section-heading">
-          <p className="section-kicker">About Me</p>
-          <h2>Experience</h2>
+          <p className="section-kicker">Profile</p>
+          <h2>About</h2>
         </div>
-        <div className="summary-grid">
-          <div className="summary-copy">
-            {professionalSummary.map((item) => (
-              <p key={item}>{item}</p>
+        <div className="experience-grid">
+          <section className="experience-panel">
+            <h3>Education</h3>
+            <div className="timeline-list">
+              {education.map((item) => (
+                <article key={`${item.degree}-${item.institution}`} className="timeline-card">
+                  <div className="timeline-head">
+                    <div>
+                      <h4>{item.degree}</h4>
+                      <p className="timeline-org">{item.institution}</p>
+                    </div>
+                    <div className="timeline-meta">
+                      <span>{item.location}</span>
+                      <span>{item.period}</span>
+                    </div>
+                  </div>
+                  <ul className="detail-list">
+                    {item.details.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="experience-panel">
+            <h3>Technical Skills</h3>
+            <div className="skills-groups">
+              {technicalSkills.map((group) => (
+                <article key={group.label} className="skills-group">
+                  <h4>{group.label}</h4>
+                  <ul className="pill-list">
+                    {group.items.map((item) => (
+                      <li key={`${group.label}-${item}`}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="experience-section">
+          <h3>Work Experience</h3>
+          <div className="timeline-list">
+            {workExperience.map((item) => (
+              <article key={`${item.role}-${item.organization}`} className="timeline-card">
+                <div className="timeline-head">
+                  <div>
+                    <h4>{item.role}</h4>
+                    <p className="timeline-org">{item.organization}</p>
+                  </div>
+                  <div className="timeline-meta">
+                    <span>{item.location}</span>
+                    <span>{item.period}</span>
+                  </div>
+                </div>
+                <ul className="detail-list">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </article>
             ))}
           </div>
-          <div className="highlights">
-            <h3>Highlights</h3>
-            <ul className="pill-list">
-              {achievements.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+        </section>
+
+        <section className="experience-section">
+          <h3>Volunteering Experience</h3>
+          <div className="timeline-list">
+            {volunteeringExperience.map((item) => (
+              <article key={`${item.role}-${item.organization}`} className="timeline-card">
+                <div className="timeline-head">
+                  <div>
+                    <h4>{item.role}</h4>
+                    <p className="timeline-org">{item.organization}</p>
+                  </div>
+                  <div className="timeline-meta">
+                    <span>{item.location}</span>
+                    <span>{item.period}</span>
+                  </div>
+                </div>
+                <ul className="detail-list">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </div>
-        </div>
+        </section>
       </section>
     </main>
   );
@@ -194,10 +295,12 @@ function ProjectsPage({ projects }) {
           <div className="card-grid">
             {projects.map((project) => (
               <article key={project.id} className="info-card">
-                <div className="meta-row">
-                  <span>{project.year || "In Progress"}</span>
-                  <span>{project.type || "Project"}</span>
-                </div>
+                {(project.year || project.type) && (
+                  <div className="meta-row">
+                    {project.year ? <span>{project.year}</span> : null}
+                    {project.type ? <span>{project.type}</span> : null}
+                  </div>
+                )}
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 {project.stack.length ? (
@@ -239,7 +342,7 @@ function TravelBlogPage({ travelPosts }) {
         {travelPosts.length ? (
           <div className="card-grid">
             {travelPosts.map((post) => {
-              const coverImage = post.gallery[0]?.url;
+              const coverImage = post.coverImage || post.gallery[0]?.url;
 
               return (
                 <a
@@ -292,7 +395,7 @@ function TravelDetailPage({ post }) {
     );
   }
 
-  const paragraphs = splitParagraphs(post.body);
+  const storyBlocks = parseTravelStoryBlocks(post.body);
 
   return (
     <main className="page-view">
@@ -310,8 +413,41 @@ function TravelDetailPage({ post }) {
         </div>
         <p className="travel-lead">{post.summary}</p>
         <div className="travel-story">
-          {paragraphs.length ? (
-            paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+          {storyBlocks.length ? (
+            storyBlocks.map((block, index) => {
+              if (block.type === "heading") {
+                return (
+                  <h3 key={`${block.content}-${index}`} className="travel-subheading">
+                    {block.content}
+                  </h3>
+                );
+              }
+
+              if (block.type === "note") {
+                return (
+                  <p key={`${block.content}-${index}`} className="travel-note">
+                    {block.content}
+                  </p>
+                );
+              }
+
+              if (block.type === "image") {
+                return (
+                  <figure key={`${block.src}-${index}`} className="travel-inline-media">
+                    <img
+                      className="travel-inline-image"
+                      src={block.src}
+                      alt={block.caption || post.title}
+                    />
+                    {block.caption ? (
+                      <figcaption className="travel-inline-caption">{block.caption}</figcaption>
+                    ) : null}
+                  </figure>
+                );
+              }
+
+              return <p key={`${block.content}-${index}`}>{block.content}</p>;
+            })
           ) : (
             <p>No story has been written for this city yet.</p>
           )}
@@ -1079,8 +1215,6 @@ function App() {
     error: null
   });
   const [contentReady, setContentReady] = useState(false);
-  const [session, setSession] = useState(null);
-  const [authReady, setAuthReady] = useState(!hasSupabase);
 
   const refreshContent = useCallback(async () => {
     const nextContent = await loadPortfolioContent();
@@ -1091,37 +1225,6 @@ function App() {
   useEffect(() => {
     refreshContent();
   }, [refreshContent]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (!hasSupabase) {
-      setAuthReady(true);
-      return () => {};
-    }
-
-    getAdminSession()
-      .then((activeSession) => {
-        if (isMounted) {
-          setSession(activeSession);
-          setAuthReady(true);
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setAuthReady(true);
-        }
-      });
-
-    const unsubscribe = subscribeToAuthChanges((activeSession) => {
-      setSession(activeSession);
-    });
-
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     const onHashChange = () => {
@@ -1135,56 +1238,6 @@ function App() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
-  const handleSignIn = useCallback(async (credentials) => {
-    await signInAdmin(credentials);
-  }, []);
-
-  const handleSignOut = useCallback(async () => {
-    await signOutAdmin();
-  }, []);
-
-  const handleSaveProject = useCallback(
-    async (projectDraft) => {
-      const savedProject = await saveProject(projectDraft);
-      await refreshContent();
-      return savedProject;
-    },
-    [refreshContent]
-  );
-
-  const handleDeleteProject = useCallback(
-    async (projectId) => {
-      await deleteProject(projectId);
-      await refreshContent();
-    },
-    [refreshContent]
-  );
-
-  const handleSaveTravelPost = useCallback(
-    async (travelDraft) => {
-      const savedPost = await saveTravelPost(travelDraft);
-      await refreshContent();
-      return savedPost;
-    },
-    [refreshContent]
-  );
-
-  const handleDeleteTravelPost = useCallback(
-    async (travelPost) => {
-      await deleteTravelPost(travelPost);
-      await refreshContent();
-    },
-    [refreshContent]
-  );
-
-  const handleUploadTravelImage = useCallback(async (file, postSlug) => {
-    return uploadTravelImage(file, postSlug);
-  }, []);
-
-  const handleRemoveTravelImage = useCallback(async (path) => {
-    await removeTravelImage(path);
-  }, []);
-
   const activeTravelPost = useMemo(() => {
     const travelSlug = getTravelSlugFromRoute(route);
 
@@ -1196,11 +1249,11 @@ function App() {
   }, [portfolioContent.travelPosts, route]);
 
   const renderCurrentPage = () => {
-    if (!contentReady && route !== "/admin") {
+    if (!contentReady) {
       return <LoadingPage />;
     }
 
-    if (route === "/experience") {
+    if (route === "/about" || route === "/experience") {
       return <ExperiencePage />;
     }
 
@@ -1214,27 +1267,6 @@ function App() {
 
     if (route.startsWith("/travel-blog/")) {
       return <TravelDetailPage post={activeTravelPost} />;
-    }
-
-    if (route === "/admin") {
-      return (
-        <AdminPage
-          authReady={authReady}
-          contentError={portfolioContent.error}
-          contentSource={portfolioContent.source}
-          onDeleteProject={handleDeleteProject}
-          onDeleteTravelPost={handleDeleteTravelPost}
-          onRemoveTravelImage={handleRemoveTravelImage}
-          onSaveProject={handleSaveProject}
-          onSaveTravelPost={handleSaveTravelPost}
-          onSignIn={handleSignIn}
-          onSignOut={handleSignOut}
-          onUploadTravelImage={handleUploadTravelImage}
-          projects={portfolioContent.projects}
-          session={session}
-          travelPosts={portfolioContent.travelPosts}
-        />
-      );
     }
 
     return (
@@ -1260,10 +1292,18 @@ function App() {
           </section>
           <aside className="hero-portrait-wrap" aria-label="Portrait">
             <div className="hero-portrait-frame">
+              <div className="hero-portrait-window">
+                <img
+                  className="hero-portrait"
+                  src={`${import.meta.env.BASE_URL}tejaswini-landing.jpg`}
+                  alt="Tejaswini Gude"
+                />
+              </div>
               <img
-                className="hero-portrait"
-                src={`${import.meta.env.BASE_URL}tejaswini-landing.jpg`}
-                alt="Tejaswini Gude"
+                className="hero-ornate-frame"
+                src={`${import.meta.env.BASE_URL}elegant-gold-border.png`}
+                alt=""
+                aria-hidden="true"
               />
             </div>
           </aside>
@@ -1276,7 +1316,7 @@ function App() {
     <div className="page-shell">
       <header className={`topbar${mobileMenuOpen ? " is-open" : ""}`}>
         <a className="brand" href="#/">
-          My Portfolio
+          My Journey
         </a>
         <button
           className="menu-toggle"

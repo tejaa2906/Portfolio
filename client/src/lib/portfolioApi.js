@@ -90,6 +90,7 @@ function mapTravelPost(row, index = 0) {
     dateLabel: row.date_label || row.dateLabel || "",
     summary: row.summary || "",
     body: row.body || "",
+    coverImage: row.cover_image || row.coverImage || "",
     gallery: normalizeGallery(row.gallery),
     displayOrder:
       typeof row.display_order === "number"
