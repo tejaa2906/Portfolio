@@ -139,15 +139,18 @@ function parseTravelStoryBlocks(text) {
         return null;
       }
 
-      const imageMatch = block.match(/^\[image:([^|\]]+)\|([^\]]+)\]$/i);
+      const imageMatch = block.match(/^\[image:([^\]]+)\]$/i);
 
       if (imageMatch) {
-        const [, src, caption] = imageMatch;
+        const [src = "", caption = "", variant = ""] = imageMatch[1]
+          .split("|")
+          .map((part) => part.trim());
 
         return {
           type: "image",
           src: `${import.meta.env.BASE_URL}${src.trim()}`.replace(/([^:]\/)\/+/g, "$1"),
-          caption: caption.trim()
+          caption,
+          variant
         };
       }
 
@@ -433,7 +436,12 @@ function TravelDetailPage({ post }) {
 
               if (block.type === "image") {
                 return (
-                  <figure key={`${block.src}-${index}`} className="travel-inline-media">
+                  <figure
+                    key={`${block.src}-${index}`}
+                    className={`travel-inline-media${
+                      block.variant ? ` is-${block.variant}` : ""
+                    }`}
+                  >
                     <img
                       className="travel-inline-image"
                       src={block.src}
@@ -452,9 +460,9 @@ function TravelDetailPage({ post }) {
             <p>No story has been written for this city yet.</p>
           )}
         </div>
-        <div className="travel-gallery-grid">
-          {post.gallery.length ? (
-            post.gallery.map((image) => (
+        {post.gallery.length ? (
+          <div className="travel-gallery-grid">
+            {post.gallery.map((image) => (
               <figure key={image.url} className="travel-gallery-frame">
                 <img
                   className="travel-gallery-image"
@@ -462,13 +470,9 @@ function TravelDetailPage({ post }) {
                   alt={image.alt || post.title}
                 />
               </figure>
-            ))
-          ) : (
-            <div className="travel-image-placeholder travel-gallery-empty">
-              <span>Add up to four images from the admin page for this city.</span>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : null}
       </article>
     </main>
   );
