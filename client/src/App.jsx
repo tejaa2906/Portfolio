@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import SparklesText from "./components/SparklesText";
+import TravelBlogPage from "./features/travel/TravelBlogPage";
+import TravelDetailPage from "./features/travel/TravelDetailPage";
+import {
+  makeEmptyTravelDraft,
+  toTravelDraft
+} from "./features/travel/travelDrafts";
 import {
   education,
   introParagraphs,
@@ -14,8 +20,6 @@ import {
   loadPortfolioContent,
   slugify
 } from "./lib/portfolioApi";
-
-const travelGallerySlots = 4;
 
 function getRouteFromHash() {
   if (typeof window === "undefined") {
@@ -61,20 +65,6 @@ function makeEmptyProjectDraft() {
   };
 }
 
-function makeEmptyTravelDraft() {
-  return {
-    id: "",
-    title: "",
-    slug: "",
-    city: "",
-    dateLabel: "",
-    summary: "",
-    body: "",
-    displayOrder: 0,
-    gallery: Array.from({ length: travelGallerySlots }, () => null)
-  };
-}
-
 function toProjectDraft(project) {
   if (!project) {
     return makeEmptyProjectDraft();
@@ -91,80 +81,6 @@ function toProjectDraft(project) {
     linkUrl: project.linkUrl || "",
     displayOrder: project.displayOrder || 0
   };
-}
-
-function toTravelDraft(post) {
-  if (!post) {
-    return makeEmptyTravelDraft();
-  }
-
-  const gallery = Array.from({ length: travelGallerySlots }, () => null);
-
-  (post.gallery || []).forEach((item, index) => {
-    const slot = Number.isInteger(item.slot) ? item.slot : index;
-
-    if (slot >= 0 && slot < travelGallerySlots) {
-      gallery[slot] = {
-        url: item.url,
-        path: item.path || "",
-        alt: item.alt || ""
-      };
-    }
-  });
-
-  return {
-    id: post.id || "",
-    title: post.title || "",
-    slug: post.slug || "",
-    city: post.city || "",
-    dateLabel: post.dateLabel || "",
-    summary: post.summary || "",
-    body: post.body || "",
-    displayOrder: post.displayOrder || 0,
-    gallery
-  };
-}
-
-function splitParagraphs(text) {
-  return String(text || "")
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-}
-
-function parseTravelStoryBlocks(text) {
-  return splitParagraphs(text)
-    .map((block) => {
-      if (/^\[photo\d+\]$/i.test(block)) {
-        return null;
-      }
-
-      const imageMatch = block.match(/^\[image:([^\]]+)\]$/i);
-
-      if (imageMatch) {
-        const [src = "", caption = "", variant = ""] = imageMatch[1]
-          .split("|")
-          .map((part) => part.trim());
-
-        return {
-          type: "image",
-          src: `${import.meta.env.BASE_URL}${src.trim()}`.replace(/([^:]\/)\/+/g, "$1"),
-          caption,
-          variant
-        };
-      }
-
-      if (block.startsWith("## ")) {
-        return { type: "heading", content: block.slice(3).trim() };
-      }
-
-      if (block.startsWith("📸")) {
-        return { type: "note", content: block.replace(/^📸\s*/, "").trim() };
-      }
-
-      return { type: "paragraph", content: block };
-    })
-    .filter(Boolean);
 }
 
 function StatusBanner({ tone = "neutral", children }) {
@@ -330,150 +246,6 @@ function ProjectsPage({ projects }) {
           <p className="page-note">Projects will appear here once you add them.</p>
         )}
       </section>
-    </main>
-  );
-}
-
-function TravelBlogPage({ travelPosts }) {
-  return (
-    <main className="page-view">
-      <section className="content-card">
-        <div className="section-heading">
-          <p className="section-kicker">Stories</p>
-          <h2>Travel Blog</h2>
-        </div>
-        {travelPosts.length ? (
-          <div className="card-grid">
-            {travelPosts.map((post) => {
-              const coverImage = post.coverImage || post.gallery[0]?.url;
-
-              return (
-                <a
-                  key={post.id}
-                  className="info-card travel-card travel-link"
-                  href={`#/travel-blog/${post.slug}`}
-                >
-                  <div className="travel-image-frame">
-                    {coverImage ? (
-                      <img className="travel-image" src={coverImage} alt={post.title} />
-                    ) : (
-                      <div className="travel-image-placeholder">
-                        <span>No travel photos uploaded yet</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="meta-row">
-                    <span>{post.dateLabel || "Travel Notes"}</span>
-                    <span>{post.city || "Unknown City"}</span>
-                  </div>
-                  <h3>{post.title}</h3>
-                  <p>{post.summary}</p>
-                  <span className="inline-link">Open story</span>
-                </a>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="page-note">Travel stories will appear here once you publish them.</p>
-        )}
-      </section>
-    </main>
-  );
-}
-
-function TravelDetailPage({ post }) {
-  if (!post) {
-    return (
-      <main className="page-view">
-        <section className="content-card">
-          <a className="back-link" href="#/travel-blog">
-            Back to Travel Blog
-          </a>
-          <h2>Story not found</h2>
-          <p className="page-note">
-            This travel story does not exist yet, or the slug changed.
-          </p>
-        </section>
-      </main>
-    );
-  }
-
-  const storyBlocks = parseTravelStoryBlocks(post.body);
-
-  return (
-    <main className="page-view">
-      <article className="content-card travel-detail-card">
-        <a className="back-link" href="#/travel-blog">
-          Back to Travel Blog
-        </a>
-        <div className="section-heading">
-          <p className="section-kicker">{post.city || "Travel Story"}</p>
-          <h2>{post.title}</h2>
-        </div>
-        <div className="meta-row travel-detail-meta">
-          <span>{post.dateLabel || "Travel Notes"}</span>
-          <span>{post.city || "Unknown City"}</span>
-        </div>
-        <p className="travel-lead">{post.summary}</p>
-        <div className="travel-story">
-          {storyBlocks.length ? (
-            storyBlocks.map((block, index) => {
-              if (block.type === "heading") {
-                return (
-                  <h3 key={`${block.content}-${index}`} className="travel-subheading">
-                    {block.content}
-                  </h3>
-                );
-              }
-
-              if (block.type === "note") {
-                return (
-                  <p key={`${block.content}-${index}`} className="travel-note">
-                    {block.content}
-                  </p>
-                );
-              }
-
-              if (block.type === "image") {
-                return (
-                  <figure
-                    key={`${block.src}-${index}`}
-                    className={`travel-inline-media${
-                      block.variant ? ` is-${block.variant}` : ""
-                    }`}
-                  >
-                    <img
-                      className="travel-inline-image"
-                      src={block.src}
-                      alt={block.caption || post.title}
-                    />
-                    {block.caption ? (
-                      <figcaption className="travel-inline-caption">{block.caption}</figcaption>
-                    ) : null}
-                  </figure>
-                );
-              }
-
-              return <p key={`${block.content}-${index}`}>{block.content}</p>;
-            })
-          ) : (
-            <p>No story has been written for this city yet.</p>
-          )}
-        </div>
-        {post.gallery.length ? (
-          <div className="travel-gallery-grid">
-            {post.gallery.map((image) => (
-              <figure key={image.url} className="travel-gallery-frame">
-                <img
-                  className="travel-gallery-image"
-                  src={image.url}
-                  alt={image.alt || post.title}
-                />
-              </figure>
-            ))}
-          </div>
-        ) : null}
-      </article>
     </main>
   );
 }

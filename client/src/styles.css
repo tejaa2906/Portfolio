@@ -568,6 +568,132 @@ textarea {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.travel-inline-row {
+  width: min(100%, 44rem);
+  margin: 0.2rem 0 0.55rem;
+  display: grid;
+  gap: 0.9rem;
+  justify-self: start;
+}
+
+.travel-inline-row .travel-inline-media,
+.travel-inline-media.is-side-by-side {
+  width: auto;
+  margin: 0;
+  justify-self: stretch;
+}
+
+.travel-inline-stack {
+  width: min(100%, 29rem);
+  margin: 0.2rem 0 0.8rem;
+  display: grid;
+  gap: 0.8rem;
+  justify-self: start;
+}
+
+.travel-inline-stack-stage {
+  position: relative;
+  min-height: clamp(18rem, 42vw, 24rem);
+  padding: 0.4rem 2.2rem 1.7rem 0.3rem;
+}
+
+.travel-stack-card {
+  position: absolute;
+  inset: 0 1.2rem 0 0;
+  margin: 0;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  transition:
+    transform 0.36s ease,
+    opacity 0.28s ease,
+    filter 0.28s ease;
+}
+
+.travel-stack-card.is-current {
+  z-index: 3;
+  opacity: 1;
+  transform: translate(0, 0) rotate(-2deg) scale(1);
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.18));
+}
+
+.travel-stack-card.is-next {
+  z-index: 2;
+  opacity: 0.82;
+  transform: translate(1rem, 0.85rem) rotate(4deg) scale(0.97);
+}
+
+.travel-stack-card.is-later {
+  z-index: 1;
+  opacity: 0.56;
+  transform: translate(1.9rem, 1.5rem) rotate(-5deg) scale(0.93);
+}
+
+.travel-stack-card.is-hidden {
+  z-index: 0;
+  opacity: 0;
+  transform: translate(2.4rem, 1.8rem) rotate(6deg) scale(0.9);
+  pointer-events: none;
+}
+
+.travel-stack-image {
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.travel-inline-stack-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.travel-stack-button,
+.travel-stack-dot {
+  border: 1px solid rgba(239, 159, 196, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.travel-stack-button:hover,
+.travel-stack-dot:hover {
+  transform: translateY(-1px);
+}
+
+.travel-stack-button {
+  border-radius: 999px;
+  padding: 0.55rem 0.82rem;
+  color: #f4e7ee;
+}
+
+.travel-inline-stack-dots {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.travel-stack-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.travel-stack-dot.is-active {
+  background: rgba(243, 201, 105, 0.88);
+  border-color: rgba(243, 201, 105, 0.88);
+}
+
+.travel-stack-index {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
 .travel-inline-image {
   width: 100%;
   display: block;
@@ -977,6 +1103,29 @@ textarea {
   .gallery-editor,
   .travel-gallery-grid {
     grid-template-columns: 1fr;
+  }
+
+  .travel-inline-row {
+    grid-template-columns: 1fr !important;
+    width: min(100%, 21rem);
+  }
+
+  .travel-inline-stack {
+    width: min(100%, 21rem);
+  }
+
+  .travel-inline-stack-stage {
+    min-height: 15rem;
+    padding-right: 1rem;
+  }
+
+  .travel-inline-stack-controls {
+    flex-wrap: wrap;
+  }
+
+  .travel-inline-stack-dots {
+    order: 3;
+    width: 100%;
   }
 
   .hero {

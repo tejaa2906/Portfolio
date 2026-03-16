@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
-import { seedProjects, seedTravelPosts } from "../siteContent";
+import { seedTravelPosts } from "../features/travel/posts";
+import { seedProjects } from "../siteContent";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
