@@ -1,7 +1,12 @@
 export const navItems = [
   { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },
-  { label: "Travel Blog", href: "/travel-blog" }
+  { label: "Travel Blog", href: "/travel-blog" },
+  {
+    label: "Resume",
+    href: "tejaswini-gude-resume.pdf",
+    external: true
+  }
 ];
 
 export const introParagraphs = [

@@ -1107,16 +1107,28 @@ function App() {
           <span />
         </button>
         <nav id="main-menu" className="menu" aria-label="Main">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              className={`menu-link${isActiveRoute(route, item.href) ? " is-active" : ""}`}
-              href={`#${item.href}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isExternalLink = Boolean(item.external);
+
+            return (
+              <a
+                key={item.href}
+                className={`menu-link${
+                  !isExternalLink && isActiveRoute(route, item.href) ? " is-active" : ""
+                }`}
+                href={
+                  isExternalLink
+                    ? `${import.meta.env.BASE_URL}${item.href}`
+                    : `#${item.href}`
+                }
+                target={isExternalLink ? "_blank" : undefined}
+                rel={isExternalLink ? "noreferrer" : undefined}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
       </header>
 
