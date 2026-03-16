@@ -1071,7 +1071,7 @@ function App() {
               <div className="hero-portrait-window">
                 <img
                   className="hero-portrait"
-                  src={`${import.meta.env.BASE_URL}tejaswini-landing.jpg`}
+                  src={`${import.meta.env.BASE_URL}landing-portrait.jpg`}
                   alt="Tejaswini Gude"
                 />
               </div>
