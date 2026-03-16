@@ -3,7 +3,7 @@ const banffInEarlyMay = {
   slug: "banff-in-early-may",
   title: "Banff in Early May",
   city: "Banff",
-  dateLabel: "Early May 2024",
+  dateLabel: "May 2024",
   coverImage: "travel/banff/cover.jpg",
   summary:
     "A three day trip to Banff in early May 2024 with my sister and a new friend from Calgary, filled with Lake Louise, mountain views, hot springs, drizzly trails, BeaverTails, and a quiet solo dinner.",

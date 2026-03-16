@@ -101,9 +101,19 @@ function ExperiencePage() {
   return (
     <main className="page-view">
       <section className="content-card">
-        <div className="section-heading">
-          <p className="section-kicker">Profile</p>
-          <h2>About</h2>
+        <div className="section-heading about-heading">
+          <div>
+            <p className="section-kicker">Profile</p>
+            <h2>Resume</h2>
+          </div>
+          <a
+            className="resume-button"
+            href={`${import.meta.env.BASE_URL}tejaswini-gude-resume.pdf`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View Resume
+          </a>
         </div>
         <div className="experience-grid">
           <section className="experience-panel">
@@ -1075,12 +1085,6 @@ function App() {
                   alt="Tejaswini Gude"
                 />
               </div>
-              <img
-                className="hero-ornate-frame"
-                src={`${import.meta.env.BASE_URL}elegant-gold-border.png`}
-                alt=""
-                aria-hidden="true"
-              />
             </div>
           </aside>
         </main>
