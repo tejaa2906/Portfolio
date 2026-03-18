@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import SparklesText from "./components/SparklesText";
 import TravelBlogPage from "./features/travel/TravelBlogPage";
@@ -1137,6 +1138,7 @@ function App() {
       </header>
 
       {renderCurrentPage()}
+      <Analytics />
     </div>
   );
 }
