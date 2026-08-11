@@ -50,13 +50,25 @@ export const technicalSkills = [
 
 export const workExperience = [
   {
+    role: "Market Research and Administrative Support Assistant",
+    organization: "Memorial University of Newfoundland, Research Innovation Office",
+    location: "St. John's, NL",
+    period: "Jan 2026 - Present",
+    bullets: [
+      "Conduct market research, IP valuation, and customer discovery for university-developed technologies while handling sensitive and confidential information.",
+      "Prepare reports summarizing market opportunities, competing solutions, commercialization potential, and prospective customers or industry partners.",
+      "Support office operations through data entry, document review, records management, vendor sourcing, and general administrative assistance."
+    ]
+  },
+  {
     role: "Sales Representative",
     organization: "Charm Diamond Centres",
     location: "St. John's, NL",
     period: "Jan 2023 - Jul 2023",
     bullets: [
-      "Delivered in-person customer service in a 7-month retail role, assisting shoppers with product selection and purchase decisions.",
-      "Supported daily showroom operations by maintaining product knowledge, organizing displays, and contributing to a positive customer experience."
+      "Met sales targets by identifying customer needs, recommending suitable products, and clearly communicating product features, quality, and value.",
+      "Built positive customer relationships, answered questions, and supported purchasing decisions through personalized service and strong product knowledge.",
+      "Maintained showroom organization and collaborated with team members to support store operations and deliver a positive customer experience."
     ]
   },
   {
@@ -67,6 +79,16 @@ export const workExperience = [
     bullets: [
       "Managed guest greetings, seating, and waitlist coordination in a fast-paced restaurant environment over a 6-month front-of-house role.",
       "Collaborated with servers and kitchen staff through daily shifts to support efficient guest flow and a welcoming dining experience."
+    ]
+  },
+  {
+    role: "Technical Operations & Website Support",
+    organization: "Gimbal House",
+    location: "Hyderabad, India",
+    period: "Feb 2020 - Apr 2022",
+    bullets: [
+      "Maintained and updated the company website to support business visibility and customer communication.",
+      "Prepared, tested, and troubleshot equipment before dispatch, supporting reliable day-to-day operations."
     ]
   }
 ];
@@ -96,6 +118,18 @@ export const volunteeringExperience = [
 
 export const seedProjects = [
   {
+    id: "fraud-alert-compliance-case-management",
+    slug: "fraud-alert-compliance-case-management",
+    title: "Fraud Alert and Compliance Case Management System",
+    year: "",
+    type: "Full-Stack Compliance Prototype",
+    description:
+      "Built a full-stack fraud monitoring and compliance prototype featuring transaction reviews, suspicious activity alerts, risk scoring, and case management workflows. Developed a Node.js and TypeScript REST API with JWT authentication, Prisma ORM, and PostgreSQL models for users, transactions, alerts, cases, and evidence notes. Deployed the backend using AWS Elastic Beanstalk and Amazon RDS for PostgreSQL, with a Next.js frontend deployed on Vercel.",
+    stack: ["Next.js", "Node.js", "TypeScript", "PostgreSQL", "AWS"],
+    linkUrl: "",
+    displayOrder: 1
+  },
+  {
     id: "medqueue",
     slug: "medqueue",
     title: "MedQueue",
@@ -105,6 +139,6 @@ export const seedProjects = [
       "Built and deployed a MERN-stack healthcare prototype on Vercel to improve ER wait-time transparency for patients and hospital staff. The interface includes a patient portal, nurse dashboard, and operations view with a demo mode for the full end-to-end experience. It tracks queue status, estimated wait time, and return instructions in real time while supporting role-based workflows for patients and nurses.",
     stack: ["MongoDB", "Express.js", "React", "Node.js", "Vercel"],
     linkUrl: "",
-    displayOrder: 1
+    displayOrder: 2
   }
 ];
