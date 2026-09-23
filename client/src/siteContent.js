@@ -17,7 +17,7 @@ export const education = [
     location: "St. John's, NL",
     period: "Sept 2021 - Dec 2026",
     details: [
-      "Relevant coursework: Data Structures & Algorithms, Object Oriented Programming, Data Preparation Techniques"
+      "Relevant coursework: Data Structures & Algorithms, Object Oriented Programming, Data Preparation Techniques, Video Game Programming, Mobile App Development"
     ]
   }
 ];
@@ -25,46 +25,55 @@ export const education = [
 export const technicalSkills = [
   {
     label: "Languages",
-    items: ["JavaScript", "Python", "Java", "C"]
+    items: ["Python", "C", "JavaScript", "TypeScript", "Java", "SQL"]
   },
   {
     label: "Frameworks / Technologies",
     items: [
-      "MongoDB",
-      "Express.js",
       "React",
+      "Next.js",
       "Node.js",
-      "MERN Stack",
+      "Express.js",
+      "REST APIs",
+      "AWS",
       "Vercel"
     ]
   },
   {
     label: "Databases",
-    items: ["SQL", "MongoDB"]
+    items: ["PostgreSQL", "MongoDB", "Prisma ORM"]
   },
   {
     label: "Libraries / Tools",
     items: ["Pandas", "Git"]
+  },
+  {
+    label: "Administrative & Business",
+    items: [
+      "Market Research", "IP Valuation", "Customer Discovery", "Customer Service",
+      "Data Entry", "File Organization", "Records Management", "Outreach",
+      "Communication", "Time Management", "Problem Solving", "Microsoft Office"
+    ]
   }
 ];
 
 export const workExperience = [
   {
-    role: "Market Research and Administrative Support Assistant",
-    organization: "Memorial University of Newfoundland, Research Innovation Office",
+    role: "Social Media and Website Coordinator",
+    organization: "Memorial University of Newfoundland, Secularism on the Move",
     location: "St. John's, NL",
-    period: "Jan 2026 - Present",
+    period: "Sept 2026 - Present",
     bullets: [
-      "Conduct market research, IP valuation, and customer discovery for university-developed technologies while handling sensitive and confidential information.",
-      "Prepare reports summarizing market opportunities, competing solutions, commercialization potential, and prospective customers or industry partners.",
-      "Support office operations through data entry, document review, records management, vendor sourcing, and general administrative assistance."
+      "Support and update the project's bilingual website and social media channels to promote research activities, events, and project updates.",
+      "Create and coordinate digital content for web and social media, ensuring information is clear, accurate, and consistent across platforms.",
+      "Support online event promotion and collaborate with members of a national research team on digital outreach and project visibility."
     ]
   },
   {
     role: "Sales Representative",
-    organization: "Charm Diamond Centres",
+    organization: "Crescent Gold & Diamond Centres",
     location: "St. John's, NL",
-    period: "Jan 2023 - Jul 2023",
+    period: "Sept 2026 - Present",
     bullets: [
       "Met sales targets by identifying customer needs, recommending suitable products, and clearly communicating product features, quality, and value.",
       "Built positive customer relationships, answered questions, and supported purchasing decisions through personalized service and strong product knowledge.",
@@ -72,23 +81,14 @@ export const workExperience = [
     ]
   },
   {
-    role: "Hostess",
-    organization: "Mallard Cottage",
+    role: "Market Research and Administrative Support Assistant",
+    organization: "Memorial University of Newfoundland, Research Innovation Office",
     location: "St. John's, NL",
-    period: "Jul 2024 - Dec 2024",
+    period: "Jun 2026 - Aug 2026",
     bullets: [
-      "Managed guest greetings, seating, and waitlist coordination in a fast-paced restaurant environment over a 6-month front-of-house role.",
-      "Collaborated with servers and kitchen staff through daily shifts to support efficient guest flow and a welcoming dining experience."
-    ]
-  },
-  {
-    role: "Technical Operations & Website Support",
-    organization: "Gimbal House",
-    location: "Hyderabad, India",
-    period: "Feb 2020 - Apr 2022",
-    bullets: [
-      "Maintained and updated the company website to support business visibility and customer communication.",
-      "Prepared, tested, and troubleshot equipment before dispatch, supporting reliable day-to-day operations."
+      "Conducted market research, IP valuation, and customer discovery for university-developed technologies while handling sensitive and confidential information.",
+      "Prepared reports summarizing market opportunities, competing solutions, commercialization potential, and prospective customers or industry partners.",
+      "Supported office operations through data entry, document review, records management, vendor sourcing, and general administrative assistance."
     ]
   }
 ];
@@ -100,8 +100,7 @@ export const volunteeringExperience = [
     location: "Hyderabad, India",
     period: "2020 - 2021",
     bullets: [
-      "Contributed over a 2-year period by supporting 2 core areas: data entry and field assistance for animal care operations.",
-      "Assisted the veterinary doctor with on-field support involving dogs and other animals while helping maintain organized care records."
+      "Supported data entry and field assistance for animal care operations while helping maintain organized records."
     ]
   },
   {
@@ -110,8 +109,7 @@ export const volunteeringExperience = [
     location: "Hyderabad, India",
     period: "2016 - 2019",
     bullets: [
-      "Hosted school radio programming over a 4-year period, keeping students engaged and entertained during daily breaks.",
-      "Presented daily trivia and announcements over the radio, strengthening communication, confidence, and public speaking skills."
+      "Hosted school radio segments and announcements, strengthening communication, confidence, and public-speaking skills."
     ]
   }
 ];

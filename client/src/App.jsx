@@ -142,7 +142,7 @@ function ExperiencePage() {
           </section>
 
           <section className="experience-panel">
-            <h3>Technical Skills</h3>
+            <h3>Skills</h3>
             <div className="skills-groups">
               {technicalSkills.map((group) => (
                 <article key={group.label} className="skills-group">
@@ -184,7 +184,7 @@ function ExperiencePage() {
         </section>
 
         <section className="experience-section">
-          <h3>Volunteering Experience</h3>
+          <h3>Additional Experience</h3>
           <div className="timeline-list">
             {volunteeringExperience.map((item) => (
               <article key={`${item.role}-${item.organization}`} className="timeline-card">
