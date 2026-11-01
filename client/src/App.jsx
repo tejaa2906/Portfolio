@@ -131,11 +131,11 @@ function ExperiencePage() {
                       <span>{item.period}</span>
                     </div>
                   </div>
-                  <ul className="detail-list">
+                  {item.details.length > 0 && <ul className="detail-list">
                     {item.details.map((detail) => (
                       <li key={detail}>{detail}</li>
                     ))}
-                  </ul>
+                  </ul>}
                 </article>
               ))}
             </div>
@@ -1075,6 +1075,12 @@ function App() {
                 {paragraph}
               </p>
             ))}
+            <address className="profile-contact">
+              <span>St. John's, NL</span>
+              <a href="mailto:tejaswinigude29@gmail.com">tejaswinigude29@gmail.com</a>
+              <a href="tel:+17097289237">+1 (709) 728-9237</a>
+              <a href="https://www.tejaswinigude.com">www.tejaswinigude.com</a>
+            </address>
           </section>
           <aside className="hero-portrait-wrap" aria-label="Portrait">
             <div className="hero-portrait-frame">

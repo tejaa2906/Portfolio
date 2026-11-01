@@ -254,6 +254,21 @@ textarea {
   color: #d7cbd3;
 }
 
+.profile-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin-top: 1.5rem;
+  font-style: normal;
+  font-size: 0.9rem;
+}
+
+.profile-contact a {
+  color: inherit;
+  overflow-wrap: anywhere;
+  text-underline-offset: 0.2em;
+}
+
 .hero-portrait-wrap {
   display: flex;
   justify-content: center;

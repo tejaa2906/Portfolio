@@ -5,9 +5,9 @@ export const navItems = [
 ];
 
 export const introParagraphs = [
-  "I've always liked the process of learning, building, and exploring new things. A lot of the way I move through life comes from curiosity. I like following ideas, seeing where they lead, and turning them into something meaningful, whether that becomes a project, a story, or simply a lesson I carry with me.",
-  "Projects, travel, random interests, and late-night ideas all shape who I am and what I create. They influence the way I think, the way I solve problems, and the way I see the world. I do not see these parts of my life as separate. They all connect in ways that continue to inspire me.",
-  "This site is where I keep those pieces together. It is a collection of the things I have built, the places that inspired me, and the side quests that made the journey more interesting. It reflects what I am learning, what I care about, and the person I am becoming along the way."
+  "I'm a Computer Science student at Memorial University of Newfoundland in St. John's, completing my Bachelor of Science in December 2026. My experience brings together technology, market research, sales, and community outreach.",
+  "At Memorial's Research Innovation Office, I support business development by researching commercialization pathways, industry partnerships, licensing opportunities, and startup initiatives. I also coordinate website and social media content for Secularism on the Move and help students with front-desk services, 3D printing, and equipment loans at the Hatcher Office.",
+  "At Crescent Gold & Diamond Centres, I help customers find jewellery that suits their needs and build relationships through personalized service and outreach. Across these roles, I bring technical skills, clear communication, and a practical approach to solving problems."
 ];
 
 export const education = [
@@ -16,9 +16,7 @@ export const education = [
     institution: "Memorial University of Newfoundland",
     location: "St. John's, NL",
     period: "Sept 2021 - Dec 2026",
-    details: [
-      "Relevant coursework: Data Structures & Algorithms, Object Oriented Programming, Data Preparation Techniques, Video Game Programming, Mobile App Development"
-    ]
+    details: []
   }
 ];
 
@@ -48,16 +46,38 @@ export const technicalSkills = [
     items: ["Pandas", "Git"]
   },
   {
-    label: "Administrative & Business",
+    label: "Sales & Business Development",
     items: [
-      "Market Research", "IP Valuation", "Customer Discovery", "Customer Service",
-      "Data Entry", "File Organization", "Records Management", "Outreach",
-      "Communication", "Time Management", "Problem Solving", "Microsoft Office"
+      "Market Research", "Salesforce CRM", "IP Valuation", "Customer Discovery",
+      "Customer Service", "Outreach", "Communication", "Time Management",
+      "Problem Solving", "Microsoft 365"
     ]
   }
 ];
 
 export const workExperience = [
+  {
+    role: "Market Research Assistant",
+    organization: "Memorial University of Newfoundland, Research Innovation Office",
+    location: "St. John's, NL",
+    period: "Jun 2026 - Present",
+    bullets: [
+      "Support the Business Development team by researching commercialization pathways, potential industry partnerships, licensing opportunities, and startup initiatives for university-developed innovations.",
+      "Analyze innovation ecosystem resources, identify gaps in researcher support, and develop recommendations to improve commercialization and industry engagement opportunities.",
+      "Research common questions around intellectual property and commercialization, and develop FAQ content, LinkedIn outreach materials, and awareness strategies to engage researchers and industry stakeholders."
+    ]
+  },
+  {
+    role: "Sales Representative",
+    organization: "Crescent Gold & Diamond Centres",
+    location: "St. John's, NL",
+    period: "Jan 2023 - Aug 2023, Sept 2026 - Present",
+    bullets: [
+      "Meet sales targets by actively listening to customers, understanding their needs and preferences, and recommending jewellery that fits their occasion, budget, and expectations.",
+      "Build trust and rapport with customers throughout the purchasing process, explaining product features, quality, and value clearly to help them make confident decisions.",
+      "Conduct outbound calls to existing customers to communicate promotional offers, provide repair updates, and maintain strong customer relationships."
+    ]
+  },
   {
     role: "Social Media and Website Coordinator",
     organization: "Memorial University of Newfoundland, Secularism on the Move",
@@ -70,25 +90,13 @@ export const workExperience = [
     ]
   },
   {
-    role: "Sales Representative",
-    organization: "Crescent Gold & Diamond Centres",
+    role: "Student Help Desk Assistant",
+    organization: "Memorial University of Newfoundland, Hatcher Office",
     location: "St. John's, NL",
     period: "Sept 2026 - Present",
     bullets: [
-      "Met sales targets by identifying customer needs, recommending suitable products, and clearly communicating product features, quality, and value.",
-      "Built positive customer relationships, answered questions, and supported purchasing decisions through personalized service and strong product knowledge.",
-      "Maintained showroom organization and collaborated with team members to support store operations and deliver a positive customer experience."
-    ]
-  },
-  {
-    role: "Market Research and Administrative Support Assistant",
-    organization: "Memorial University of Newfoundland, Research Innovation Office",
-    location: "St. John's, NL",
-    period: "Jun 2026 - Aug 2026",
-    bullets: [
-      "Conducted market research, IP valuation, and customer discovery for university-developed technologies while handling sensitive and confidential information.",
-      "Prepared reports summarizing market opportunities, competing solutions, commercialization potential, and prospective customers or industry partners.",
-      "Supported office operations through data entry, document review, records management, vendor sourcing, and general administrative assistance."
+      "Assist students with check-ins, student card printing, general inquiries, and front-desk support in a busy campus environment.",
+      "Support 3D printing requests and equipment loans, including checkout, returns, basic troubleshooting, and accurate record keeping."
     ]
   }
 ];
@@ -110,6 +118,15 @@ export const volunteeringExperience = [
     period: "2016 - 2019",
     bullets: [
       "Hosted school radio segments and announcements, strengthening communication, confidence, and public-speaking skills."
+    ]
+  },
+  {
+    role: "Fundraising Intern",
+    organization: "Youth Empowerment Foundation",
+    location: "India",
+    period: "2020 - 2021",
+    bullets: [
+      "Supported fundraising and community outreach initiatives for an NGO focused on educating underprivileged children and encouraging youth-led social impact."
     ]
   }
 ];
